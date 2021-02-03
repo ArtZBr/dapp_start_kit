@@ -5,7 +5,7 @@ import './App.css';
 
 class App extends Component {
   
-  async componetWillMount() {
+  async componentWillMount() {
     await this.loadWeb3()
     console.log(window.web3)
   }
