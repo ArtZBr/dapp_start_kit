@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Web3 from 'web3'
 import Navbar from './Navbar'
-import logo from '../logo.png';
 import './App.css';
 
 class App extends Component {
@@ -21,6 +20,8 @@ class App extends Component {
     const ethBalance = await web3.eth.getBalance(this.state.account)
     this.setState({ ethBalance })
     // console.log(this.state.ethBalance)
+    
+    this.setState({ loading: false })
   }
 
   async loadWeb3() {
@@ -46,9 +47,16 @@ class App extends Component {
   }
   
   render() {
+    let content
+    if(this.state.loading) {
+      content = <p id="loader" className="text-center">Loading...</p>
+    } else {
+      content = <Main />
+    }
+    
     return (
       <div>
-        <Navbar account={this.state.account} />
+      <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
@@ -58,26 +66,14 @@ class App extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={logo} className="App-logo" alt="logo" />
                 </a>
-                <h1>DApp Start Kit</h1>
-                <p>
-                  Edit <code>src/components/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="http://x"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  CREATE A DAPP <u><b>NOW! </b></u>
-                </a>
+                {content}
               </div>
             </main>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
