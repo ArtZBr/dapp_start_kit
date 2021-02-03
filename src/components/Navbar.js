@@ -13,6 +13,13 @@ class Navbar extends Component {
         >
           DApp Start Kit V1
         </a>
+        <ul className="navbar-nav px-3">
+          <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
+            <small className="text-secondary">
+              <small id="account">{this.props.account}</small>
+            </small>
+          </li>
+        </ul>
       </nav>
     )
   }
