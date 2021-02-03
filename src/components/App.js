@@ -19,6 +19,7 @@ class App extends Component {
 
     const ethBalance = await web3.eth.getBalance(this.state.account)
     this.setState({ ethBalance })
+    // console.log(this.state.ethBalance)
   }
 
   async loadWeb3() {
@@ -31,6 +32,15 @@ class App extends Component {
     }
     else {
       window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+    }
+  }
+  
+  constructor(props) {
+    super(props)
+    this.state = {
+      account: '',
+      ethBalance: '0',
+      loading: true
     }
   }
   
