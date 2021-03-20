@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import logo from '../logo.png'
 
 class Navbar extends Component {
 
@@ -11,7 +12,8 @@ class Navbar extends Component {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Start Kit V2
+          <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="" />
+          &nbsp; Start Kit V2
         </a>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
@@ -26,3 +28,4 @@ class Navbar extends Component {
 }
 
 export default Navbar;
+
