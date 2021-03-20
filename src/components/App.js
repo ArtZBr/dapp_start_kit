@@ -7,43 +7,39 @@ import './App.css';
 class App extends Component {
   
   async componentWillMount() {
-    await this.loadWeb3()
     await this.loadBlockchainData()
   }
 
-  async loadBlockchainData() {
-    const web3 = window.web3
+  async loadBlockchainData(dispatch) {
 
-    const accounts = await web3.eth.getAccounts()
-    this.setState({ account: accounts[0] })
-    // console.log(accounts)
+    //check if MetaMask exists
+    if(typeof window.ethereum!=='undefined'){
+      //assign values to variables: web3, netId, accounts
+      const web3 = new Web3(window.ethereum)
+      const netId = await web3.eth.net.getId()
+      const accounts = await web3.eth.getAccounts()
+      //console.log(web3, netId, accounts)
 
-    const ethBalance = await web3.eth.getBalance(this.state.account)
-    this.setState({ ethBalance })
-    // console.log(this.state.ethBalance)
-    
-    this.setState({ loading: false })
-  }
-
-  async loadWeb3() {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
-    }
-    else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider)
-    }
-    else {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+      //check if account is detected, then load balance&setStates, elsepush alert
+       if(typeof accounts[0] !=='undefined'){
+         const balance = await web3.eth.getBalance(accounts[0])
+         //console.log(web3.utils.fromWei(balance))
+         this.setState({account: accounts[0], balance, web3})
+      } else {
+        window.alert('Please login with MetaMask')
+      }
+    } else {
+      //if MetaMask not exists push alert
+      window.alert('You are visiting a blockchain website, please install MetaMask.')
     }
   }
   
   constructor(props) {
     super(props)
     this.state = {
+      web3: 'undefined',
       account: '',
-      ethBalance: '0',
-      loading: true
+      balance: 0
     }
   }
   
